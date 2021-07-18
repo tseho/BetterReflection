@@ -32,7 +32,7 @@ class Identifier
         if (
             $name === self::WILDCARD
             || $name === ReflectionFunctionAbstract::CLOSURE_NAME
-            || strpos($name, ReflectionClass::ANONYMOUS_CLASS_NAME_PREFIX) === 0
+            || preg_match(ReflectionClass::ANONYMOUS_CLASS_NAME_REGEX, $name) === 1
         ) {
             $this->name = $name;
 

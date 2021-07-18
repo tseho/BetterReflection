@@ -56,6 +56,13 @@ class ReflectionClass implements Reflection
 {
     public const ANONYMOUS_CLASS_NAME_PREFIX = 'class@anonymous';
 
+    /**
+     * Since PHP8, anonymous class name can be either:
+     * class@anonymous/[...]
+     * {classname}@anonymous/[...]
+     */
+    public const ANONYMOUS_CLASS_NAME_REGEX = '#^\w+@anonymous#';
+
     private Reflector $reflector;
 
     private ?NamespaceNode $declaringNamespace = null;
