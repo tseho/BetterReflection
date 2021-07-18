@@ -61,6 +61,11 @@
             "dev-master": "4.0-dev"
         }
     },
+    "config": {
+        "platform": {
+            "php": "7.4.7"
+        }
+    },
     "minimum-stability": "dev",
     "prefer-stable": true
 }
