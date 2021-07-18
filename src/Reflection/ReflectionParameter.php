@@ -407,6 +407,8 @@ class ReflectionParameter
 
     /**
      * Is this parameter an array?
+     *
+     * @deprecated since PHP8
      */
     public function isArray(): bool
     {
@@ -415,6 +417,8 @@ class ReflectionParameter
 
     /**
      * Is this parameter a callable?
+     *
+     * @deprecated since PHP8
      */
     public function isCallable(): bool
     {
@@ -470,6 +474,8 @@ class ReflectionParameter
      * Gets a ReflectionClass for the type hint (returns null if not a class)
      *
      * @throws RuntimeException
+     *
+     * @deprecated since PHP8
      */
     public function getClass(): ?ReflectionClass
     {

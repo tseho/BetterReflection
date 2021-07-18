@@ -307,10 +307,13 @@ class ReflectionSourceStubberTest extends TestCase
             . '.' . $original->getName();
 
         self::assertSame($original->getName(), $stubbed->getName(), $parameterName);
-        self::assertSame($original->isArray(), $stubbed->isArray(), $parameterName);
-        if (! ($original->getDeclaringClass()->getName() === Closure::class && $originalMethod->getName() === 'fromCallable')) {
-            // Bug in PHP: https://3v4l.org/EeHXS
-            self::assertSame($original->isCallable(), $stubbed->isCallable(), $parameterName);
+        // ReflectionParameter::isArray() & ReflectionParameter::isCallable() are deprecated since PHP8
+        if (PHP_VERSION_ID < 80000) {
+            self::assertSame($original->isArray(), $stubbed->isArray(), $parameterName);
+            if (! ($original->getDeclaringClass()->getName() === Closure::class && $originalMethod->getName() === 'fromCallable')) {
+                // Bug in PHP: https://3v4l.org/EeHXS
+                self::assertSame($original->isCallable(), $stubbed->isCallable(), $parameterName);
+            }
         }
 
         //self::assertSame($original->allowsNull(), $stubbed->allowsNull()); @TODO WTF?
@@ -330,14 +333,17 @@ class ReflectionSourceStubberTest extends TestCase
         self::assertSame($original->isPassedByReference(), $stubbed->isPassedByReference(), $parameterName);
         self::assertSame($original->isVariadic(), $stubbed->isVariadic(), $parameterName);
 
-        $class = $original->getClass();
-        if ($class) {
-            $stubbedClass = $stubbed->getClass();
+        // ReflectionParameter::getClass() is deprecated since PHP8
+        if (PHP_VERSION_ID < 80000) {
+            $class = $original->getClass();
+            if ($class) {
+                $stubbedClass = $stubbed->getClass();
 
-            self::assertInstanceOf(ReflectionClass::class, $stubbedClass, $parameterName);
-            self::assertSame($class->getName(), $stubbedClass->getName(), $parameterName);
-        } else {
-            self::assertNull($stubbed->getClass(), $parameterName);
+                self::assertInstanceOf(ReflectionClass::class, $stubbedClass, $parameterName);
+                self::assertSame($class->getName(), $stubbedClass->getName(), $parameterName);
+            } else {
+                self::assertNull($stubbed->getClass(), $parameterName);
+            }
         }
     }
 
